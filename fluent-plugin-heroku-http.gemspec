@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |gem|
-  gem.name          = "fluent-plugin-heroku-syslog"
-  gem.version       = "0.1.1"
-  gem.authors       = ["Kazuyuki Honda"]
-  gem.email         = ["hakobera@gmail.com"]
-  gem.description   = %q{fluent plugin to drain heroku syslog}
-  gem.summary       = %q{fluent plugin to drain heroku syslog}
-  gem.homepage      = "https://github.com/hakobera/fluent-plugin-heroku-syslog"
+  gem.name          = "fluent-plugin-heroku-http"
+  gem.version       = "0.0.1"
+  gem.authors       = ["Platform Delivery"]
+  gem.email         = ["ops@applause.com"]
+  gem.description   = %q{fluent plugin to drain heroku http}
+  gem.summary       = %q{fluent plugin to drain heroku http}
+  gem.homepage      = "https://github.com/ApplauseOSS/fluent-plugin-heroku-http"
   gem.license       = "APLv2"
 
   gem.files         = `git ls-files`.split($\)
