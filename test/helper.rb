@@ -4,7 +4,7 @@ begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
   $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
+  $stderr.puts 'Run `bundle install` to install missing gems'
   exit e.status_code
 end
 require 'test/unit'
@@ -32,7 +32,7 @@ def ipv6_enabled?
   require 'socket'
 
   begin
-    TCPServer.open("::1", 0)
+    TCPServer.open('::1', 0)
     true
   rescue
     false
