@@ -25,7 +25,6 @@ class HerokuHttpInputTest < Test::Unit::TestCase
     bind 127.0.0.1
     body_size_limit 10m
     keepalive_timeout 5
-    tag heroku
   ).freeze
 
   def create_driver(conf = CONFIG)
@@ -38,7 +37,6 @@ class HerokuHttpInputTest < Test::Unit::TestCase
     assert_equal '127.0.0.1', d.instance.bind
     assert_equal 10 * 1024 * 1024, d.instance.body_size_limit
     assert_equal 5, d.instance.keepalive_timeout
-    assert_equal 'heroku', d.instance.tag
   end
 
   def test_configuring_drain_ids
