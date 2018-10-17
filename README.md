@@ -1,6 +1,7 @@
 # fluent-plugin-heroku-http
 
 [![Build Status](https://travis-ci.org/ApplauseOSS/fluent-plugin-heroku-http.svg?branch=master)](https://travis-ci.org/ApplauseOSS/fluent-plugin-heroku-http)
+[![Gem Version](https://badge.fury.io/rb/fluent-plugin-heroku-http.svg)](https://badge.fury.io/rb/fluent-plugin-heroku-http)
 
 This is a [fluent](https://fluentd.org) input plugin to accept Heroku HTTPS
 log drains.
@@ -32,8 +33,8 @@ gem 'fluent-plugin-heroku-http'
 
 This plugin implements HerokuHttpInput which extends the built-in HttpInput
 plugin to accept RFC-5424 formatted syslog messages, framed using syslog TCP
-protocol octet counting framing method from RFC-6587, from [heroku syslog
-drains](https://devcenter.heroku.com/articles/log-drains#syslog-drains). This
+protocol octet counting framing method from RFC-6587, from [Heroku HTTPS
+drains](https://devcenter.heroku.com/articles/log-drains#https-drains). This
 plugin support all of the `in_http` plugin configuration parameters.
 
 ### Basic configuration
