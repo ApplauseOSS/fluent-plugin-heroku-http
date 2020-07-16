@@ -7,7 +7,12 @@ module Fluent
       HTTPS_REGEXP = /^([0-9]+)\s+\<(?<pri>[0-9]+)\>[0-9]* (?<time>[^ ]*) (?<drain_id>[^ ]*) (?<ident>[a-zA-Z0-9_\/\.\-]*) (?<pid>[a-zA-Z0-9\.]+)? *- *(?<message>.*)$/
 
       FACILITY_MAP = Fluent::Plugin::SyslogInput::FACILITY_MAP
-      PRIORITY_MAP = Fluent::Plugin::SyslogInput::PRIORITY_MAP
+      # Constant was renamed in 1.7.3.
+      PRIORITY_MAP = if Gem::Version.new(Fluent::VERSION) >= Gem::Version.new('1.7.3')
+                       Fluent::Plugin::SyslogInput::SEVERITY_MAP
+                     else
+                       Fluent::Plugin::SyslogInput::PRIORITY_MAP
+                     end
 
       # https://tools.ietf.org/html/rfc5424#section-6.2.1 describes FACILITY
       # as multiplied by 8 (3 bits), so this is used to shift the values to
