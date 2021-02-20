@@ -48,10 +48,11 @@ module Fluent
               record['facility'] = FACILITY_MAP[pri >> FACILITY_SHIFT]
               record['priority'] = PRIORITY_MAP[pri & PRIORITY_MASK]
             end
-            puts("record: #{record}")
+            
           end
 
         records.each { |record| record.delete('pri') }
+        records.each { |record| puts("record: #{record}") }
         yield nil, records
       end
     end
