@@ -33,6 +33,8 @@ module Fluent
 
         records =
           text.split("\n").map do |line|
+
+            puts("line: #{line}")
             m = line.match(expression)
 
             m.names.each_with_object({}) do |name, record|
@@ -46,6 +48,7 @@ module Fluent
               record['facility'] = FACILITY_MAP[pri >> FACILITY_SHIFT]
               record['priority'] = PRIORITY_MAP[pri & PRIORITY_MASK]
             end
+            puts("record: #{record}")
           end
 
         records.each { |record| record.delete('pri') }
