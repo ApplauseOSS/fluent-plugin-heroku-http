@@ -36,6 +36,9 @@ module Fluent
 
             puts("line: #{line}")
             m = line.match(expression)
+            if m.nil?
+              puts("NOT PARSED line: #{line}")
+            end
 
             m.names.each_with_object({}) do |name, record|
               record[name] = m[name]
