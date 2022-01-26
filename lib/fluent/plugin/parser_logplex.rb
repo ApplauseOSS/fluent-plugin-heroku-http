@@ -1,3 +1,5 @@
+require 'fluent/version'
+
 module Fluent
   module Plugin
     class Logplex < Parser
