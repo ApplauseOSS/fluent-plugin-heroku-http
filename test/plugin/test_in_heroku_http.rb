@@ -60,23 +60,23 @@ class HerokuHttpInputTest < Test::Unit::TestCase
       assert_equal '200', res.code
     end
 
-    assert_equal d.events[0], ['heroku', time_parser.parse('2014-01-29T06:25:52.589365+00:00'), {
+    assert_equal ['heroku', time_parser.parse('2014-01-29T06:25:52.589365+00:00'), {
       'drain_id' => 'd.fc6b856b-3332-4546-93de-7d0ee272c3bd',
       'ident' => 'app',
       'pid' => 'web.1',
       'message' => 'foo',
       'facility' => 'user',
-      'priority' => 'notice'
-    }]
+      'loglevel' => 'notice'
+    }], d.events[0]
 
-    assert_equal d.events[1], ['heroku', time_parser.parse('2014-01-30T07:35:00.123456+09:00'), {
+    assert_equal ['heroku', time_parser.parse('2014-01-30T07:35:00.123456+09:00'), {
       'drain_id' => 'd.fc6b856b-3332-4546-93de-7d0ee272c3bd',
       'ident' => 'app',
       'pid' => 'web.1',
       'message' => 'bar',
       'facility' => 'user',
-      'priority' => 'notice'
-    }]
+      'loglevel' => 'notice'
+    }], d.events[1]
   end
 
   def test_msg_size
@@ -93,23 +93,23 @@ class HerokuHttpInputTest < Test::Unit::TestCase
       assert_equal '200', res.code
     end
 
-    assert_equal d.events[0], ['heroku', time_parser.parse('2014-01-01T01:23:45.123456+00:00'), {
+    assert_equal ['heroku', time_parser.parse('2014-01-01T01:23:45.123456+00:00'), {
       'drain_id' => 'd.fc6b856b-3332-4546-93de-7d0ee272c3bd',
       'ident' => 'app',
       'pid' => 'web.1',
       'message' => 'x' * 100,
       'facility' => 'user',
-      'priority' => 'notice'
-    }]
+      'loglevel' => 'notice'
+    }], d.events[0]
 
-    assert_equal d.events[1], ['heroku', time_parser.parse('2014-01-01T01:23:45.123456+00:00'), {
+    assert_equal ['heroku', time_parser.parse('2014-01-01T01:23:45.123456+00:00'), {
       'drain_id' => 'd.fc6b856b-3332-4546-93de-7d0ee272c3bd',
       'ident' => 'app',
       'pid' => 'web.1',
       'message' => 'x' * 1024,
       'facility' => 'user',
-      'priority' => 'notice'
-    }]
+      'loglevel' => 'notice'
+    }], d.events[1]
   end
 
   def test_accept_matched_drain_id_multiple
@@ -126,23 +126,23 @@ class HerokuHttpInputTest < Test::Unit::TestCase
       assert_equal '200', res.code
     end
 
-    assert_equal d.events[0], ['heroku', time_parser.parse('2014-01-01T01:23:45.123456+00:00'), {
+    assert_equal ['heroku', time_parser.parse('2014-01-01T01:23:45.123456+00:00'), {
       'drain_id' => 'd.fc6b856b-3332-4546-93de-7d0ee272c3bd',
       'ident' => 'app',
       'pid' => 'web.1',
       'message' => 'x' * 100,
       'facility' => 'user',
-      'priority' => 'notice'
-    }]
+      'loglevel' => 'notice'
+    }], d.events[0]
 
-    assert_equal d.events[1], ['heroku', time_parser.parse('2014-01-01T01:23:45.123456+00:00'), {
+    assert_equal ['heroku', time_parser.parse('2014-01-01T01:23:45.123456+00:00'), {
       'drain_id' => 'd.fc6b856b-3332-4546-93de-7d0ee272c3bd',
       'ident' => 'app',
       'pid' => 'web.1',
       'message' => 'x' * 1024,
       'facility' => 'user',
-      'priority' => 'notice'
-    }]
+      'loglevel' => 'notice'
+    }], d.events[1]
   end
 
   def test_ignore_unmatched_drain_id
