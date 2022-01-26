@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# frozen_string_literal: true
 
 Gem::Specification.new do |gem|
   gem.name          = 'fluent-plugin-heroku-http'
@@ -9,6 +9,7 @@ Gem::Specification.new do |gem|
   gem.summary       = 'fluent plugin to drain heroku http'
   gem.homepage      = 'https://github.com/ApplauseOSS/fluent-plugin-heroku-http'
   gem.license       = 'APLv2'
+  gem.required_ruby_version = '3.1.0'
 
   gem.files         = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }

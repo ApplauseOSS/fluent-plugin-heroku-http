@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'helper'
 require 'net/http'
 require 'fluent/test/driver/input'
@@ -40,7 +42,7 @@ class HerokuHttpInputTest < Test::Unit::TestCase
   end
 
   def test_configuring_drain_ids
-    d = create_driver(CONFIG + %(drain_ids ["abc"]))
+    d = create_driver("#{CONFIG}drain_ids [\"abc\"]")
     assert_equal d.instance.drain_ids, ['abc']
   end
 
@@ -82,8 +84,8 @@ class HerokuHttpInputTest < Test::Unit::TestCase
     time_parser = Fluent::TimeParser.new
 
     tests = [
-      '156 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - ' + 'x' * 100,
-      '1080 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - ' + 'x' * 1024
+      "156 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - #{'x' * 100}",
+      "1080 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - #{'x' * 1024}"
     ]
 
     d.run(expect_records: 2) do
@@ -111,12 +113,12 @@ class HerokuHttpInputTest < Test::Unit::TestCase
   end
 
   def test_accept_matched_drain_id_multiple
-    d = create_driver(CONFIG + "\ndrain_ids [\"abc\", \"d.fc6b856b-3332-4546-93de-7d0ee272c3bd\"]")
+    d = create_driver("#{CONFIG}\ndrain_ids [\"abc\", \"d.fc6b856b-3332-4546-93de-7d0ee272c3bd\"]")
     time_parser = Fluent::TimeParser.new
 
     tests = [
-      '156 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - ' + 'x' * 100,
-      '1080 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - ' + 'x' * 1024
+      "156 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - #{'x' * 100}",
+      "1080 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - #{'x' * 1024}"
     ]
 
     d.run(expect_records: 2) do
@@ -144,7 +146,7 @@ class HerokuHttpInputTest < Test::Unit::TestCase
   end
 
   def test_ignore_unmatched_drain_id
-    d = create_driver(CONFIG + "\ndrain_ids [\"abc\"]")
+    d = create_driver("#{CONFIG}\ndrain_ids [\"abc\"]")
 
     tests = [
       '58 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - x',

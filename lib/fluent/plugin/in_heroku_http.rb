@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fluent/plugin/in_syslog'
 require 'fluent/plugin/in_http'
 require_relative 'parser_logplex'
@@ -17,13 +19,13 @@ module Fluent
         drain_id = params['HTTP_LOGPLEX_DRAIN_TOKEN']
 
         if @drain_ids.nil? || @drain_ids.include?(drain_id)
-          _time, records = super
+          tyme, records = super
 
           records.each do |record|
             record['drain_id'] = drain_id
           end
 
-          [_time, records]
+          [tyme, records]
         else
           log.warn("drain_id #{drain_id.inspect} is not in #{@drain_ids.inspect}.")
 

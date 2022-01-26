@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rubygems'
 require 'bundler'
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
-  $stderr.puts e.message
-  $stderr.puts 'Run `bundle install` to install missing gems'
+  warn e.message
+  warn 'Run `bundle install` to install missing gems'
   exit e.status_code
 end
 require 'test/unit'
@@ -17,7 +19,11 @@ require 'fluent/log'
 require 'fluent/test'
 
 unless defined?(Test::Unit::AssertionFailedError)
-  class Test::Unit::AssertionFailedError < StandardError
+  module Test
+    module Unit
+      class AssertionFailedError < StandardError
+      end
+    end
   end
 end
 
@@ -34,12 +40,16 @@ def ipv6_enabled?
   begin
     TCPServer.open('::1', 0)
     true
-  rescue
+  rescue StandardError
     false
   end
 end
 
 require 'fluent/plugin/in_heroku_http'
 
-class Test::Unit::TestCase
+module Test
+  module Unit
+    class TestCase
+    end
+  end
 end
