@@ -20,4 +20,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rubocop'
   gem.add_development_dependency('test-unit', ['~> 3.5.3'])
+  gem.metadata['rubygems_mfa_required'] = 'true'
 end
