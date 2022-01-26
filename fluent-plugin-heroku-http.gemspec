@@ -17,5 +17,6 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency 'fluentd', '>= 1.0'
   gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'rubocop'
   gem.add_development_dependency('test-unit', ['~> 3.5.3'])
 end
