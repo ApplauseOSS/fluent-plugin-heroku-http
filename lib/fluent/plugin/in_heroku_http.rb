@@ -24,7 +24,6 @@ module Fluent
           records.each do |record|
             record['drain_id'] = drain_id
           end
-          log.info("HttpInput #{records.count} records. #{records}")
 
           [tyme, records]
         else

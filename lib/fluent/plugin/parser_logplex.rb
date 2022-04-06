@@ -78,8 +78,6 @@ module Fluent
       end
 
       def parse(text)
-        log.info("Text to parse: '#{text}'")
-
         records = text.split("\n").map do |line|
           rec = parse_syslog(line)
           rec = override_loglevel(rec)
@@ -88,7 +86,7 @@ module Fluent
           rec = strip_dt_meta(rec)
           rec
         end
-        log.info("Parser #{records.count} records. #{records}")
+        log.info("Parsed #{records.count} records.")
         yield nil, records
       end
     end
