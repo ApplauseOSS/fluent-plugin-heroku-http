@@ -78,6 +78,8 @@ module Fluent
       end
 
       def parse(text)
+        log.info("Text to parse: '#{text}'")
+
         records = text.split("\n").map do |line|
           rec = parse_syslog(line)
           rec = override_loglevel(rec)
