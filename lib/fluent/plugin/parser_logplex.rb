@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'fluent/version'
+require 'fluent/plugin/in_syslog'
 
 module Fluent
   module Plugin

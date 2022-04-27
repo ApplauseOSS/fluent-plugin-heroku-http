@@ -1,36 +1,47 @@
 # frozen_string_literal: true
 
-require 'fluent/plugin/in_syslog'
 require 'fluent/plugin/in_http'
-require_relative 'parser_logplex'
 
 module Fluent
   module Plugin
+    # FIXME: what to do with this?
+    class ContentTypeParser < Parser
+      Fluent::Plugin.register_parser('content_type_parser', self)
+    end
+
+    # FIXME: rename
     class HerokuHttpInput < HttpInput
       Fluent::Plugin.register_input('heroku_http', self)
 
-      config_param :drain_ids, :array, default: nil
+      config_section :parser, multi: true, required: true do
+        config_param :content_type, :string
+        config_param :parse, :string
+      end
 
-      config_section :parse do
-        config_set_default :@type, 'logplex'
+      def initialize
+        super
+        @content_type_parsers = {}
+      end
+
+      def configure(conf)
+        super
+
+        @parser.each do |parser_config|
+          parser = Plugin.new_parser(parser_config.parse)
+          parser.configure(parser_config.corresponding_config_element)
+          @content_type_parsers[parser_config.content_type] = parser
+        end
       end
 
       def parse_params_with_parser(params)
-        drain_id = params['HTTP_LOGPLEX_DRAIN_TOKEN']
-
-        if @drain_ids.nil? || @drain_ids.include?(drain_id)
-          tyme, records = super
-
-          records.each do |record|
-            record['drain_id'] = drain_id
-          end
-
-          [tyme, records]
-        else
-          log.warn("drain_id #{drain_id.inspect} is not in #{@drain_ids.inspect}.")
-
-          [nil, []]
+        content_type = params['HTTP_CONTENT_TYPE']
+        parser = @content_type_parsers[content_type]
+        tyme, records = parser.parse(params['_event_record']) do |time, records|
+          return time, records
         end
+        puts records.to_s
+
+        [tyme, records]
       end
     end
   end
