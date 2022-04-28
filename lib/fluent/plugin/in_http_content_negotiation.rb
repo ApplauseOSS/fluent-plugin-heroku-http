@@ -4,7 +4,6 @@ require 'fluent/plugin/in_http'
 
 module Fluent
   module Plugin
-    # FIXME: what to do with this?
     class ContentTypeParser < Parser
       Fluent::Plugin.register_parser('content_type_parser', self)
 
@@ -33,14 +32,14 @@ module Fluent
       def parse(content_type, text)
         parser_for_type = @content_type_parsers[content_type]
         log.debug("Parser for #{content_type} = #{parser_for_type}")
-        time, records = parser_for_type.parse(text) { |time, records| return time, records }
-        yield time, records
+        tyme, records = parser_for_type.parse(text) { |tyme, records| return tyme, records }
+        log.info("time is #{tyme}")
+        yield tyme, records
       end
     end
 
-    # FIXME: rename
-    class HerokuHttpInput < HttpInput
-      Fluent::Plugin.register_input('heroku_http', self)
+    class HttpContentNegotiationInput < HttpInput
+      Fluent::Plugin.register_input('http_content_negotiation', self)
 
       helpers :parser
 
@@ -52,7 +51,7 @@ module Fluent
       def parse_params_with_parser(params)
         content_type = params['HTTP_CONTENT_TYPE']
         payload = params['_event_record']
-        tyme, records = @parser.parse(content_type, payload) { |time, records| return time, records }
+        tyme, records = @parser.parse(content_type, payload) { |tyme, records| return tyme, records }
         [tyme, records]
       end
     end

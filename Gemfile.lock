@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fluent-plugin-heroku-http (0.0.2)
+    fluent-plugin-http-content-negotiation (0.0.2)
       fluentd (>= 1.0)
 
 GEM
@@ -62,7 +62,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  fluent-plugin-heroku-http!
+  fluent-plugin-http-content-negotiation!
   rake
   rubocop
   test-unit (~> 3.5.3)

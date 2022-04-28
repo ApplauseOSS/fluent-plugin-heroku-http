@@ -1,6 +1,6 @@
-# fluent-plugin-heroku-http
+# fluent-plugin-http-content-negotiation
 
-[![Gem Version](https://badge.fury.io/rb/fluent-plugin-heroku-http.svg)](https://badge.fury.io/rb/fluent-plugin-heroku-http)
+[![Gem Version](https://badge.fury.io/rb/fluent-plugin-http-content-negotiation.svg)](https://badge.fury.io/rb/fluent-plugin-http-content-negotiation)
 
 # NOTE: This plugin is no longer maintained
 
@@ -23,20 +23,20 @@ easily be integrated into complex pipelines.
 Install with `gem` or `td-agent-gem` commands:
 ```
 # using fluentd/gem
-$ gem install fluent-plugin-heroku-http
+$ gem install fluent-plugin-http-content-negotiation
 
 # using td-agent
-$ td-agent-gem install fluent-plugin-heroku-http
+$ td-agent-gem install fluent-plugin-http-content-negotiation
 ```
 
 Install using `bundler` in Gemfile:
 ```
-gem 'fluent-plugin-heroku-http'
+gem 'fluent-plugin-http-content-negotiation'
 ```
 
 ## Configuration
 
-This plugin implements HerokuHttpInput which extends the built-in HttpInput
+This plugin implements HttpContentNegotiationInput which extends the built-in HttpInput
 plugin to accept RFC-5424 formatted syslog messages, framed using syslog TCP
 protocol octet counting framing method from RFC-6587, from [Heroku HTTPS
 drains](https://devcenter.heroku.com/articles/log-drains#https-drains). This
@@ -73,4 +73,4 @@ $ heroku drains:add https://YOUR-FLUENTD-HOST/DESIRED-FLUENT-TAG
 
 
 ## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FApplauseOSS%2Ffluent-plugin-heroku-http.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FApplauseOSS%2Ffluent-plugin-heroku-http?ref=badge_large)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FApplauseOSS%2Ffluent-plugin-http-content-negotiation.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FApplauseOSS%2Ffluent-plugin-http-content-negotiation?ref=badge_large)

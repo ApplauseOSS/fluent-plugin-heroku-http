@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 Gem::Specification.new do |gem|
-  gem.name          = 'fluent-plugin-heroku-http'
+  gem.name          = 'fluent-plugin-http-content-negotiation'
   gem.version       = '0.0.2'
-  gem.authors       = ['Platform Delivery']
-  gem.email         = ['ops@applause.com']
-  gem.description   = 'fluent plugin to drain heroku http'
-  gem.summary       = 'fluent plugin to drain heroku http'
-  gem.homepage      = 'https://github.com/ApplauseOSS/fluent-plugin-heroku-http'
+  gem.authors       = ['Platform']
+  # gem.email         = ['dev-team@lifecheq.co.za']
+  gem.description   = 'fluent http input plugin with content negotiation'
+  gem.summary       = 'fluent http input plugin with content negotiation'
+  gem.homepage      = 'https://github.com/lifecheq/fluent-plugin-http-content-negotiation'
   gem.license       = 'APLv2'
   gem.required_ruby_version = '3.1.0'
 

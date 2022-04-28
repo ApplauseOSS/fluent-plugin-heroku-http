@@ -45,7 +45,7 @@ def ipv6_enabled?
   end
 end
 
-require 'fluent/plugin/in_heroku_http'
+require 'fluent/plugin/in_http_content_negotiation'
 
 module Test
   module Unit
