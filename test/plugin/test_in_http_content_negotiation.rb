@@ -52,43 +52,38 @@ class HttpContentNegotiationInputTest < Test::Unit::TestCase
     assert_equal 5, d.instance.keepalive_timeout
   end
 
-  # def test_configuring_drain_ids
-  #   d = create_driver("#{CONFIG}drain_ids [\"abc\"]")
-  #   assert_equal d.instance.drain_ids, ['abc']
-  # end
+  def test_time_format
+    d = create_driver
+    time_parser = Fluent::TimeParser.new
 
-  # def test_time_format
-  #   d = create_driver
-  #   time_parser = Fluent::TimeParser.new
+    tests = [
+      '59 <13>1 2014-01-29T06:25:52.589365+00:00 host app web.1 - foo',
+      '59 <13>1 2014-01-30T07:35:00.123456+09:00 host app web.1 - bar'
+    ]
 
-  #   tests = [
-  #     '59 <13>1 2014-01-29T06:25:52.589365+00:00 host app web.1 - foo',
-  #     '59 <13>1 2014-01-30T07:35:00.123456+09:00 host app web.1 - bar'
-  #   ]
+    d.run(expect_records: 2) do
+      res = post(tests)
+      assert_equal '200', res.code
+    end
 
-  #   d.run(expect_records: 2) do
-  #     res = post(tests)
-  #     assert_equal '200', res.code
-  #   end
+    assert_equal ['heroku', time_parser.parse('2014-01-29T06:25:52.589365+00:00'), {
+      'drain_id' => 'host',
+      'ident' => 'app',
+      'pid' => 'web.1',
+      'message' => 'foo',
+      'facility' => 'user',
+      'loglevel' => 'notice'
+    }], d.events[0]
 
-  #   assert_equal ['heroku', time_parser.parse('2014-01-29T06:25:52.589365+00:00'), {
-  #     'drain_id' => 'd.fc6b856b-3332-4546-93de-7d0ee272c3bd',
-  #     'ident' => 'app',
-  #     'pid' => 'web.1',
-  #     'message' => 'foo',
-  #     'facility' => 'user',
-  #     'loglevel' => 'notice'
-  #   }], d.events[0]
-
-  #   assert_equal ['heroku', time_parser.parse('2014-01-30T07:35:00.123456+09:00'), {
-  #     'drain_id' => 'd.fc6b856b-3332-4546-93de-7d0ee272c3bd',
-  #     'ident' => 'app',
-  #     'pid' => 'web.1',
-  #     'message' => 'bar',
-  #     'facility' => 'user',
-  #     'loglevel' => 'notice'
-  #   }], d.events[1]
-  # end
+    assert_equal ['heroku', time_parser.parse('2014-01-30T07:35:00.123456+09:00'), {
+      'drain_id' => 'host',
+      'ident' => 'app',
+      'pid' => 'web.1',
+      'message' => 'bar',
+      'facility' => 'user',
+      'loglevel' => 'notice'
+    }], d.events[1]
+  end
 
   def test_msg_size
     d = create_driver
@@ -113,64 +108,15 @@ class HttpContentNegotiationInputTest < Test::Unit::TestCase
       'loglevel' => 'notice'
     }], d.events[0]
 
-    # assert_equal ['heroku', time_parser.parse('2014-01-01T01:23:45.123456+00:00'), {
-    #   'drain_id' => 'd.fc6b856b-3332-4546-93de-7d0ee272c3bd',
-    #   'ident' => 'app',
-    #   'pid' => 'web.1',
-    #   'message' => 'x' * 1024,
-    #   'facility' => 'user',
-    #   'loglevel' => 'notice'
-    # }], d.events[1]
+    assert_equal ['heroku', time_parser.parse('2014-01-01T01:23:45.123456+00:00'), {
+      'drain_id' => 'host',
+      'ident' => 'app',
+      'pid' => 'web.1',
+      'message' => 'x' * 1024,
+      'facility' => 'user',
+      'loglevel' => 'notice'
+    }], d.events[1]
   end
-
-  # def test_accept_matched_drain_id_multiple
-  #   d = create_driver("#{CONFIG}\ndrain_ids [\"abc\", \"d.fc6b856b-3332-4546-93de-7d0ee272c3bd\"]")
-  #   time_parser = Fluent::TimeParser.new
-
-  #   tests = [
-  #     "156 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - #{'x' * 100}",
-  #     "1080 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - #{'x' * 1024}"
-  #   ]
-
-  #   d.run(expect_records: 2) do
-  #     res = post(tests)
-  #     assert_equal '200', res.code
-  #   end
-
-  #   assert_equal ['heroku', time_parser.parse('2014-01-01T01:23:45.123456+00:00'), {
-  #     'drain_id' => 'd.fc6b856b-3332-4546-93de-7d0ee272c3bd',
-  #     'ident' => 'app',
-  #     'pid' => 'web.1',
-  #     'message' => 'x' * 100,
-  #     'facility' => 'user',
-  #     'loglevel' => 'notice'
-  #   }], d.events[0]
-
-  #   assert_equal ['heroku', time_parser.parse('2014-01-01T01:23:45.123456+00:00'), {
-  #     'drain_id' => 'd.fc6b856b-3332-4546-93de-7d0ee272c3bd',
-  #     'ident' => 'app',
-  #     'pid' => 'web.1',
-  #     'message' => 'x' * 1024,
-  #     'facility' => 'user',
-  #     'loglevel' => 'notice'
-  #   }], d.events[1]
-  # end
-
-  # def test_ignore_unmatched_drain_id
-  #   d = create_driver("#{CONFIG}\ndrain_ids [\"abc\"]")
-
-  #   tests = [
-  #     '58 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - x',
-  #     '58 <13>1 2014-01-01T01:23:45.123456+00:00 host app web.1 - y'
-  #   ]
-
-  #   d.run(expect_records: 0) do
-  #     res = post(tests)
-  #     assert_equal '200', res.code
-  #   end
-
-  #   assert_equal(0, d.events.length)
-  # end
 
   def post(messages)
     # https://github.com/heroku/logplex/blob/master/doc/README.http_drains.md
