@@ -27,12 +27,12 @@ module Fluent
           @content_type_parsers[parser_config.content_type] = parser
         end
 
-        puts 'Content type parsers:'
-        puts @content_type_parsers.to_s
+        log.info('Content type parsers:', @content_type_parsers.to_s)
       end
 
       def parse(content_type, text)
         parser_for_type = @content_type_parsers[content_type]
+        log.debug("Parser for #{content_type} = #{parser_for_type}")
         time, records = parser_for_type.parse(text) { |time, records| return time, records }
         yield time, records
       end
