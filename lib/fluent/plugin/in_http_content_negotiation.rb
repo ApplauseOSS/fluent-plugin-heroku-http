@@ -7,6 +7,8 @@ module Fluent
     class ContentTypeParser < Parser
       Fluent::Plugin.register_parser('content_type_parser', self)
 
+      config_set_default :time_key, 'time'
+
       config_section :parser, multi: true, required: true do
         config_param :content_type, :string
         config_param :parse, :string
