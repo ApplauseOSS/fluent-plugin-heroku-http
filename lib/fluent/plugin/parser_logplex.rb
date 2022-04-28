@@ -87,7 +87,6 @@ module Fluent
           rec = strip_dt_meta(rec)
           rec
         end
-        log.info("Parsed #{records.count} records.")
         yield nil, records
       end
     end
