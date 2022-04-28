@@ -39,7 +39,6 @@ module Fluent
         tyme, records = parser.parse(params['_event_record']) do |time, records|
           return time, records
         end
-        puts records.to_s
 
         [tyme, records]
       end
