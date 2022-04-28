@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.summary       = 'fluent http input plugin with content negotiation'
   gem.homepage      = 'https://github.com/lifecheq/fluent-plugin-http-content-negotiation'
   gem.license       = 'APLv2'
-  gem.required_ruby_version = '3.1.0'
+  gem.required_ruby_version = '3.1.2'
 
   gem.files         = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
